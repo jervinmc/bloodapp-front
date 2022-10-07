@@ -67,16 +67,6 @@
       </div>
       <div
         :class="
-          $route.name == 'redeem'
-            ? 'px-10 pointer secondary--text'
-            : 'px-10 pointer'
-        "
-        @click="pushRoute('redeem')"
-      >
-        Redeem
-      </div>
-      <div
-        :class="
           $route.name == 'login'
             ? 'px-10 pointer secondary--text'
             : 'px-10 pointer'

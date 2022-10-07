@@ -15,6 +15,14 @@ const actions = {
     );
     response.customer = customer;
   },
+  async viewUser({ commit },  customer ) {
+    console.log(customer)
+    const response = await this.$axios.$get(
+      `/users/`
+    );
+    response.customer = customer;
+    commit("SET_USER", response);
+  },
 };
 
 export default actions;

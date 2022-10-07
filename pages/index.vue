@@ -1,9 +1,9 @@
 <template>
   <div>
     <hero />
-    <div>
+    <!-- <div>
       <promo-content />
-    </div>
+    </div> -->
     <div>
       <about />
     </div>

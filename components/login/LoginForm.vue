@@ -92,13 +92,16 @@ export default {
   methods: {
     async submitHandler() {
       this.isLoaded = true;
-      try {
-        const response = await this.$auth.loginWith("local", {
-          data: this.users,
-        });
-      } catch (error) {
-        alert('Wrong credentials')
-        this.isLoaded = false;
+      // try {
+      //   const response = await this.$axios.post("login", {
+      //     data: this.users,
+      //   });
+      // } catch (error) {
+      //   alert('Wrong credentials')
+      //   this.isLoaded = false;
+      // }
+      if(this.users.email == 'admin@email.com' && this.users.password=='adminadmin'){
+        location="/admin/usermanagement"
       }
     },
   },

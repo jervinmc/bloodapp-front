@@ -31,16 +31,16 @@
       <v-row class="px-10">
         <v-col  cols="6" align-self="center" class="px-10 bounce" transition="slide-x-transition">
           <div class="text-h4 secondary--text">
-            <b>NEW RESTO-CATION AVAILABLE NOW</b>
+            <b>Donate and Find your blood compatibilty</b>
           </div>
           <div class="text-h5 black--text">
             <b>
-              Staycation for BER Months!<br />
+           <br />
               2022
             </b>
           </div>
           <div class="my-10 black--text">
-            <v-btn depressed color="secondary" dark> BOOK NOW </v-btn>
+            <v-btn depressed color="secondary" dark> Log In </v-btn>
           </div>
         </v-col>
         <v-col align="center" cols="6">

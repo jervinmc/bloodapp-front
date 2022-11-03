@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-      v-if="false"
+      v-if="$route.name!='index' && $route.name!='login'"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -72,20 +72,9 @@
             : 'px-10 pointer'
         "
         @click="pushRoute('login')"
-        v-if="!$auth.loggedIn"
+
       >
         Login
-      </div>
-      <div
-        :class="
-          $route.name == 'client-profile'
-            ? 'px-10 pointer secondary--text'
-            : 'px-10 pointer'
-        "
-        @click="pushRoute('client/profile')"
-        v-else
-      >
-        My Profile
       </div>
       <div class="mx-5" v-if="$auth.loggedIn">
          <v-badge
@@ -110,16 +99,16 @@
           <v-icon class="pointer">mdi-bell-outline</v-icon>
         </v-badge>
       </div>
-      <div class="px-10 pointer" v-if="!$auth.loggedIn">
+      <!-- <div class="px-10 pointer" v-if="!$auth.loggedIn">
         <v-btn dark depressed color="secondary" @click="pushRoute('register')">
           Sign up
         </v-btn>
-      </div>
-      <div class="px-10 pointer" v-else>
+      </div> -->
+      <!-- <div class="px-10 pointer" v-else>
         <v-btn dark depressed color="secondary" @click="$auth.logout()">
           Logout
         </v-btn>
-      </div>
+      </div> -->
     </v-app-bar>
     <v-main>
       <v-container fluid class="pa-0">
@@ -136,7 +125,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer padless>
+    <!-- <v-footer padless>
       <v-card flat tile>
         <v-card-text>
           <v-btn
@@ -171,7 +160,7 @@
           {{ new Date().getFullYear() }} — <strong>R2M</strong>
         </v-card-text>
       </v-card>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -189,7 +178,7 @@ export default {
   data() {
     return {
       clipped: false,
-      drawer: false,
+      drawer: true,
       fixed: false,
       iconFooter: [
         "mdi-facebook",
@@ -200,14 +189,34 @@ export default {
       items: [
         {
           icon: "mdi-apps",
-          title: "Welcome",
+          title: "Home",
           to: "/",
         },
         {
           icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire",
+          title: "Donors",
+          to: "/donor_list",
         },
+        // {
+        //   icon: "mdi-chart-bubble",
+        //   title: "Donations History",
+        //   to: "/donation_history",
+        // },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Blood Request",
+          to: "/blood_request",
+        },
+        // {
+        //   icon: "mdi-chart-bubble",
+        //   title: "Request History",
+        //   to: "/request_history",
+        // },
+        // {
+        //   icon: "mdi-chart-bubble",
+        //   title: "Blood Stocks",
+        //   to: "/blood_stocks",
+        // },
       ],
       miniVariant: false,
       right: true,

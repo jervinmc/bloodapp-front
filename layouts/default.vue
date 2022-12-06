@@ -207,6 +207,11 @@ export default {
           title: "Blood Request",
           to: "/blood_request",
         },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Hospital",
+          to: "/admin/hospital",
+        },
         // {
         //   icon: "mdi-chart-bubble",
         //   title: "Request History",

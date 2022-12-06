@@ -91,24 +91,24 @@ export default {
   },
   methods: {
     async submitHandler() {
-      this.isLoaded = true;
-      try {
-        const response = await this.$axios.post("login/", this.users).then((res)=>{
-          localStorage.setItem('id',res.data[0].id)
-           location="/donor_list"
-        })
+      // this.isLoaded = true;
+      // try {
+      //   const response = await this.$axios.post("login/", this.users).then((res)=>{
+      //     localStorage.setItem('id',res.data[0].id)
+      //      location="/donor_list"
+      //   })
        
-      } catch (error) {
-        alert('Wrong credentials')
-        this.isLoaded = false;
-      }
-      // if(this.users.email == 'admin@email.com' && this.users.password=='adminadmin'){
-      //   location="/admin/usermanagement"
-      // }
-      // else{
-      //   alert('Wrong password!')
+      // } catch (error) {
+      //   alert('Wrong credentials')
       //   this.isLoaded = false;
       // }
+      if(this.users.email == 'admin@email.com' && this.users.password=='adminadmin'){
+        location="/admin/usermanagement"
+      }
+      else{
+        alert('Wrong password!')
+        this.isLoaded = false;
+      }
     },
   },
 };

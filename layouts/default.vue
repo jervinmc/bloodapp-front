@@ -187,11 +187,11 @@ export default {
         "mdi-instagram",
       ],
       items: [
-        {
-          icon: "mdi-apps",
-          title: "Home",
-          to: "/",
-        },
+        // {
+        //   icon: "mdi-apps",
+        //   title: "Home",
+        //   to: "/",
+        // },
         {
           icon: "mdi-chart-bubble",
           title: "Donors",
@@ -211,6 +211,11 @@ export default {
           icon: "mdi-chart-bubble",
           title: "Hospital",
           to: "/admin/hospital",
+        },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Hospital Request",
+          to: "/admin/hospital_request",
         },
         // {
         //   icon: "mdi-chart-bubble",

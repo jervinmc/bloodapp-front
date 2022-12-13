@@ -33,19 +33,19 @@
       <edit @cancel="editForm = false" :selectedItem="selectedItem" />
     </v-dialog>
     <div class="text-h4 pb-10">
-      <b>Hospital Management Location</b>
+      <b>Hospital Management Request</b>
     </div>
     <div>
       <v-row>
-        <v-col>
+        <!-- <v-col>
           <v-btn
             color="secondary"
             class="rounded-xl text-capitalize"
             @click="addLocation=true"
           >
-            Add Hospital Location
+            Add Hospital
           </v-btn>
-        </v-col>
+        </v-col> -->
         <v-col>
           <v-row>
             <!-- <v-col>
@@ -76,7 +76,7 @@
       <v-data-table
         class="pa-5"
         :headers="headers"
-        :items="hospital_data"
+        :items="hospitals"
         :search="search"
         :loading="isLoading"
       >
@@ -96,7 +96,7 @@
               </v-btn>
             </template>
             <v-list dense>
-              <v-list-item @click.stop="editItem(item)">
+              <!-- <v-list-item @click.stop="editItem(item)">
                 <v-list-item-content>
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item-content>
@@ -105,7 +105,12 @@
                 <v-list-item-content>
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item-content>
-              </v-list-item>
+              </v-list-item> -->
+                <v-list-item @click.stop="activate(item)">
+                <v-list-item-content>
+                  <v-list-item-title>Activate</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item> 
             </v-list>
           </v-menu>
         </template>
@@ -119,8 +124,18 @@ import { mapState, mapActions } from "vuex";
 export default {
   computed: {
     ...mapState("hospital", ["hospital_data"]),
+    ...mapState("users", ["users"]),
+    hospitals(){
+        return this.users.filter(data=>data.user_type=='Institution' && data.is_active==false)
+    }
   },
   methods: {
+    activate(item){
+        this.$store.dispatch('users/editUser',{id:item.id,is_active:true})
+        alert('Successfully Updated!')
+        location.reload()
+
+    },
     submitHandler(){
         try {
             this.$store.dispatch('hospital/add',this.register)
@@ -151,7 +166,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("hospital/view");
+     this.$store.dispatch("users/viewUser");
   },
   components: { },
   data() {
@@ -167,9 +182,7 @@ export default {
       editForm: false,
       headers: [
         { text: "ID", value: "id" },
-        { text: "Hospital Name", value: "hospital_name" },
-        { text: "Longitude", value: "longitude" },
-        { text: "Latitude", value: "latitude" },
+        { text: "Hospital Name", value: "fullname" },
         // { text: "Actions", value: "opt" },
         ,
       ],

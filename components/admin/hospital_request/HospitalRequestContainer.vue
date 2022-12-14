@@ -183,7 +183,7 @@ export default {
       headers: [
         { text: "ID", value: "id" },
         { text: "Hospital Name", value: "fullname" },
-        // { text: "Actions", value: "opt" },
+        { text: "Actions", value: "opt" },
         ,
       ],
     };

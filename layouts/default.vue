@@ -202,11 +202,11 @@ export default {
         //   title: "Donations History",
         //   to: "/donation_history",
         // },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Blood Request",
-          to: "/blood_request",
-        },
+        // {
+        //   icon: "mdi-chart-bubble",
+        //   title: "Blood Request",
+        //   to: "/blood_request",
+        // },
         {
           icon: "mdi-chart-bubble",
           title: "Hospital",

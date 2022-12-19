@@ -195,7 +195,7 @@ export default {
         {
           icon: "mdi-chart-bubble",
           title: "User Management",
-          to: "/donor_list",
+          to: "/admin/usermanagement",
         },
         // {
         //   icon: "mdi-chart-bubble",

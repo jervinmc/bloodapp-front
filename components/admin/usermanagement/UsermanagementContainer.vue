@@ -164,7 +164,7 @@ export default {
         { text: "ID", value: "id" },
         { text: "Name", value: "fullname" },
         { text: "Email", value: "email" },
-        { text: "Actions", value: "opt" },
+        // { text: "Actions", value: "opt" },
         ,
       ],
     };

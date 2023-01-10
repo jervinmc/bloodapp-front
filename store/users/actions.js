@@ -15,6 +15,11 @@ const actions = {
     );
     response.customer = customer;
   },
+  async deleteUser({ commit },  customer ) {
+    const response = await this.$axios.$delete(
+      `/users/${customer.id}/`
+    );
+  },
   async viewUser({ commit },  customer ) {
     console.log(customer)
     const response = await this.$axios.$get(

@@ -1,5 +1,54 @@
 <template>
   <div class="pa-10">
+    <v-dialog v-model="isEdit" width="500">
+        <v-card color="white" class="pa-10">
+      <div class="secondary text-h4 pa-5 white--text" align="center">
+        <b>Edit User</b>
+      </div>
+      <div class="pa-16">
+        <v-col>
+          <div>Fullname</div>
+          <div>
+            <v-text-field
+              class="rounded-lg white"
+              :rules="standardRules"
+              hide-details=""
+              placeholder="Name"
+              outlined
+              v-model="register.fullname"
+            ></v-text-field>
+          </div>
+        </v-col>
+        <v-col>
+          <div>Email Address</div>
+          <div>
+            <v-text-field
+              class="rounded-lg white"
+              :rules="standardRules"
+              hide-details=""
+              placeholder="Email Address"
+              outlined
+              v-model="register.email"
+            ></v-text-field>
+          </div>
+        </v-col>
+      </div>
+      <div>
+        <v-row>
+          <v-col align="end">
+            <v-btn color="grey" width="100" class="text-capitalize rounded-xl" @click="isEdit=false">
+              No
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn color="black" width="100" class="text-capitalize rounded-xl white--text" @click="submitHandlerRegister">
+              Yes
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
+    </v-card>
+    </v-dialog>
     <v-dialog v-model="isDelete" width="500">
       <v-card class="pa-16">
         <div align="center">
@@ -123,28 +172,34 @@
 import Add from "./Add.vue";
 import { mapState, mapActions } from "vuex";
 import Edit from "./Edit.vue";
+var cloneDeep = require("lodash.clonedeep");
 export default {
   computed: {
     ...mapState("users", ["users"]),
   },
   methods: {
+    submitHandlerRegister(){
+      this.$store.dispatch('users/editUser',this.register).then(res=>{
+        alert('Successfully Updated!')
+        location.reload()
+      })
+    },
+    editItem(item){
+      this.register = cloneDeep(item)
+      this.isEdit = true
+    },
    async submitDelete(){
      await this.$store.dispatch('users/deleteUser',this.selectedItem).then((res)=>{
       alert('Successfully Deleted')
-      location="/admin/usermanagement"
+      location.reload()
      })
     },
     deleteItem(item) {
-      this.selectedItem = item.id;
+      this.selectedItem = cloneDeep(item)
       this.isDelete = true;
     },
     goToAdd() {
         this.addForm = true
-    },
-    editItem(item) {
-      location = `/admin/usermanagement/Edit?fullname=${item.fullname}&email=${item.email}&role=${item.account_type}&id=${item.id}`;
-      // this.selectedItem = item
-      // this.editForm = true
     },
   },
   created() {
@@ -153,6 +208,8 @@ export default {
   components: { Add, Edit },
   data() {
     return {
+      isEdit:false,
+      register:{},
       isLoading:false,
       search: "",
       items: [],
@@ -164,7 +221,7 @@ export default {
         { text: "ID", value: "id" },
         { text: "Name", value: "fullname" },
         { text: "Email", value: "email" },
-        // { text: "Actions", value: "opt" },
+        { text: "Actions", value: "opt" },
         ,
       ],
     };

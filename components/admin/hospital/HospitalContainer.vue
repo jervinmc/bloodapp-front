@@ -1,30 +1,63 @@
 <template>
   <div class="pa-10">
+      <v-dialog v-model="isDelete" width="500">
+      <v-card class="pa-16">
+        <div align="center">
+          Are you sure you want to delete?
+          <div class="pt-10">
+            <v-row>
+              <v-col align="center">
+                <v-btn
+                  color="grey"
+                  class="text-capitalize rounded-xl"
+                  @click="isDelete =false"
+                  width="100"
+                >
+                  No
+                </v-btn>
+              </v-col>
+              <v-col class="start">
+                <v-btn
+                width="100"
+                  color="secondary"
+                  class="text-capitalize rounded-xl"
+                  @click="submitDelete"
+                >
+                  Yes
+                </v-btn>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="addLocation" width="500">
-        <v-card class="pa-16">
-            <div>
-                Hospital Name
-            </div>
-            <v-text-field outlined v-model="register.hospital_name" dense></v-text-field>
-            <div>
-                Longitude
-            </div>
-            <v-text-field outlined v-model="register.longitude" dense></v-text-field>
-            <div>
-                Latitude
-            </div>
-            <v-text-field outlined v-model="register.latitude" dense></v-text-field>
-            <div align="center">
-               <v-row>
-                <v-col>
-                     <v-btn @click="addLocation=false">Cancel</v-btn>
-                </v-col>
-                <v-col>
-                     <v-btn @click="submitHandler">Save</v-btn>
-                </v-col>
-               </v-row>
-            </div>
-        </v-card>
+      <v-card class="pa-16">
+        <div>Hospital Name</div>
+        <v-text-field
+          outlined
+          v-model="register.hospital_name"
+          dense
+        ></v-text-field>
+        <div>Longitude</div>
+        <v-text-field
+          outlined
+          v-model="register.longitude"
+          dense
+        ></v-text-field>
+        <div>Latitude</div>
+        <v-text-field outlined v-model="register.latitude" dense></v-text-field>
+        <div align="center">
+          <v-row>
+            <v-col>
+              <v-btn @click="addHospital">Cancel</v-btn>
+            </v-col>
+            <v-col>
+              <v-btn @click="submitHandler">Save</v-btn>
+            </v-col>
+          </v-row>
+        </div>
+      </v-card>
     </v-dialog>
     <v-dialog v-model="addForm" width="1000">
       <add @cancel="addForm = false" />
@@ -41,7 +74,7 @@
           <v-btn
             color="secondary"
             class="rounded-xl text-capitalize"
-            @click="addLocation=true"
+            @click="addLocation = true"
           >
             Add Hospital Location
           </v-btn>
@@ -116,49 +149,64 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+var cloneDeep = require("lodash.clonedeep");
 export default {
   computed: {
     ...mapState("hospital", ["hospital_data"]),
   },
   methods: {
-    submitHandler(){
-        try {
-            this.$store.dispatch('hospital/add',this.register)
-            alert('Successfully Added!')
-            this.addLocation = false;
-        } catch (error) {
-            alert(error);
-        }
-
+    addHospital(){
+      this.isEdit = false
+      this.addLocation = true
     },
-   async submitDelete(){
-     await this.$store.dispatch('users/deleteUser',this.selectedItem).then((res)=>{
-      alert('Successfully Deleted')
-      location="/admin/usermanagement"
-     })
+    submitHandler() {
+      if (this.isEdit) {
+        this.$store.dispatch("hospital/edit", this.register).then(res=>{
+           alert("Successfully Updated!");
+        location.reload()
+        })
+       
+        return;
+      }
+      try {
+        this.$store.dispatch("hospital/add", this.register);
+        alert("Successfully Added!");
+        this.addLocation = false;
+      } catch (error) {
+        alert(error);
+      }
+    },
+    async submitDelete() {
+      await this.$store
+        .dispatch("hospital/delete", this.register)
+        .then((res) => {
+          alert("Successfully Deleted");
+          location.reload()
+        });
     },
     deleteItem(item) {
-      this.selectedItem = item.id;
+      this.register = cloneDeep(item)
       this.isDelete = true;
     },
     goToAdd() {
-        this.addForm = true
+      this.addForm = true;
     },
     editItem(item) {
-      location = `/admin/usermanagement/Edit?fullname=${item.fullname}&email=${item.email}&role=${item.account_type}&id=${item.id}`;
-      // this.selectedItem = item
-      // this.editForm = true
+      this.register = cloneDeep(item);
+      this.isEdit = true;
+      this.addLocation = true;
     },
   },
   created() {
     this.$store.dispatch("hospital/view");
   },
-  components: { },
+  components: {},
   data() {
     return {
-      addLocation:false,
-      register:{},
-      isLoading:false,
+      isEdit: false,
+      addLocation: false,
+      register: {},
+      isLoading: false,
       search: "",
       items: [],
       addForm: false,
@@ -170,7 +218,7 @@ export default {
         { text: "Hospital Name", value: "hospital_name" },
         { text: "Longitude", value: "longitude" },
         { text: "Latitude", value: "latitude" },
-        // { text: "Actions", value: "opt" },
+        { text: "Actions", value: "opt" },
         ,
       ],
     };
